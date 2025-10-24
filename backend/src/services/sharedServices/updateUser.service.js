@@ -7,7 +7,7 @@ const updateUserService = async (userId, updateData, updateFile) => {
     if (!userId) {
       return "ID user không được để trống";
     }
-
+    // @Todo: điều chỉnh có thể cập nhật mỗi file ảnh
     if (!updateData || Object.keys(updateData).length === 0) {
       return "Không có dữ liệu để cập nhật";
     }

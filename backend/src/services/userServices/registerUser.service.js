@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 
 const createUserService = async (userData) => {
     try {
-        const { email, password, role = 'user' } = userData;
+        const { email, password, role = 'user', firstName, lastName } = userData;
         if (!email || !password) {
             return 'Không được nhập thiếu thông tin nào';
         }
@@ -20,6 +20,8 @@ const createUserService = async (userData) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({
+            firstName,
+            lastName,
             email,
             password: hashedPassword,
             role: role
@@ -27,6 +29,8 @@ const createUserService = async (userData) => {
 
         await newUser.save();
         return {
+            firstName,
+            lastName,
             email,
             role: newUser.role
         };

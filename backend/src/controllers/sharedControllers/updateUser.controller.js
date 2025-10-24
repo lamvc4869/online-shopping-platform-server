@@ -1,4 +1,4 @@
-import updateUserService from "../../services/adminServices/updateUser.service.js";
+import updateUserService from "../../services/sharedServices/updateUser.service.js";
 
 const updateUserController = async (req, res) => {
   try {

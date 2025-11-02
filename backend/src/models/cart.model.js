@@ -36,13 +36,6 @@ const cartSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
-        currency: {
-            type: String,
-            default: 'VND',
-        },
-        note: {
-            type: String,
-        },
         status: {
             type: String,
             enum: ['active', 'locked'],

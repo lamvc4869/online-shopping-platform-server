@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
     {
+        brandId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "brand",
+            required: true,
+        },
         name: {
             type: String,
             required: true,

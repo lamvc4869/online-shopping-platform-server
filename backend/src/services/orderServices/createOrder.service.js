@@ -1,15 +1,15 @@
 import Order from "../../models/order.model.js";
 import Cart from "../../models/Cart.model.js";
 import clearCartService from "../cartServices/clearCart.service.js";
-import { isStockAvailable } from "../../lib/helpers/stockValidator.js";
+import { isStockAvailable } from "../../utils/stockValidator.js";
 import { generateOrderNumber } from "../../lib/helpers/orderNumberGenerator.js";
 import {
   calculateItemPrice,
   calculateItemTotal,
   calculateCartTotal,
-} from "../../lib/helpers/priceCalculation.service.js";
-import { decreaseProductStock } from "../../lib/helpers/updateStock.js";
-import { increaseSoldOfProducts } from "../../lib/helpers/updateSold.js";
+} from "../../lib/calcs/priceCalculation.service.js";
+import { decreaseProductStock } from "../../lib/calcs/updateStock.js";
+import { increaseSoldOfProducts } from "../../lib/calcs/updateSold.js";
 import { populateOrder } from "../../lib/helpers/orderPopulator.js";
 
 const createOrderService = async (userId, orderData) => {

@@ -1,4 +1,4 @@
-import Product from "../../models/product.model.js";
+import Product from "../models/product.model.js";
 
 const isStockAvailable = async (cartProducts) => {
   for (const item of cartProducts) {

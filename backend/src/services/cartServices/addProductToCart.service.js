@@ -2,7 +2,7 @@ import { validateProducts } from "../../utils/validates.js";
 import { processCartItems } from "../../lib/helpers/itemProcessor.service.js";
 import { populateCart } from "../../lib/helpers/cartPopulator.service.js";
 import { findOrCreateCart } from "./cartManagement.service.js";
-import { calculateCartTotal } from "../../lib/helpers/priceCalculation.service.js";
+import { calculateCartTotal } from "../../lib/calcs/priceCalculation.service.js";
 
 const addProductToCartService = async (userId, products) => {
     try {

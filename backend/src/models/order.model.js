@@ -50,17 +50,17 @@ const orderSchema = new mongoose.Schema(
         },
         paymentMethod: {
             type: String,
-            enum: ['cod', 'online'],
+            enum: ['cod', 'online'], //@todo: [0, 1] 0: COD, 1: Online Payment
             required: true,
         },
         paymentStatus: {
             type: String,
-            enum: ['pending', 'paid', 'failed', 'refunded'],
+            enum: ['pending', 'paid', 'failed', 'refunded'], //@todo: [0, 1, 2, 3]
             default: 'pending',
         },
         orderStatus: {
             type: String,
-            enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'],
+            enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'], //@todo: [0, 1, 2, 3] 0: pending, 1: active, 2: completed, 3: cancelled
             default: 'pending',
         },
         subtotal: {

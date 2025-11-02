@@ -1,6 +1,6 @@
 import getAllOrdersService from "./getAllOrders.service.js";
-import { increaseProductStock } from "../../lib/helpers/updateStock.js";
-import { decreaseSoldOfProducts } from "../../lib/helpers/updateSold.js";
+import { increaseProductStock } from "../../lib/calcs/updateStock.js";
+import { decreaseSoldOfProducts } from "../../lib/calcs/updateSold.js";
 
 const updateOrderStatusService = async (orderId, newStatus) => {
     const orders = await getAllOrdersService();

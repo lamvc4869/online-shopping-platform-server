@@ -1,4 +1,4 @@
-import Cart from "../../models/cart.model.js";
+import Cart from "../../models/Cart.model.js";
 import User from "../../models/user.model.js";
 import Product from "../../models/product.model.js";
 import Order from "../../models/order.model.js";

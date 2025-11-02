@@ -6,14 +6,7 @@ const updateUserController = async (req, res) => {
     const updateData = req.body;
     const updateFile = req.file;
 
-    if (!updateData || Object.keys(updateData).length === 0) {
-      return res.status(400).json({
-        message: "Không có dữ liệu để cập nhật",
-        success: false,
-      });
-    }
-
-    if (updateData.role && !['user', 'admin'].includes(updateData.role)) {
+    if (updateData?.role && !["user", "admin"].includes(updateData.role)) {
       return res.status(400).json({
         message: "Role không hợp lệ",
         success: false,
@@ -21,6 +14,13 @@ const updateUserController = async (req, res) => {
     }
 
     const result = await updateUserService(userId, updateData, updateFile);
+
+    if (typeof result === "string") {
+      return res.status(400).json({
+        message: result,
+        success: false,
+      });
+    }
 
     return res.status(200).json({
       message: "Cập nhật user thành công",

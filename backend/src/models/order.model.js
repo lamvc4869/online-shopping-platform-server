@@ -10,7 +10,7 @@ const orderSchema = new mongoose.Schema(
         orderNumber: {
             type: String,
             unique: true,
-            required: true,
+            // required: true,
         },
         cartId: {
             type: mongoose.Schema.Types.ObjectId,
@@ -45,37 +45,22 @@ const orderSchema = new mongoose.Schema(
             },
         }],
         shippingAddress: {
-            name: {
-                type: String,
-            },
-            phone: {
-                type: String,
-            },
-            street: {
-                type: String,
-            },
-            city: {
-                type: String,
-            },
-            zipcode: {
-                type: String,
-            },
-            country: {
-                type: String,
-            },
+            type: String,
+            required: true,
         },
         paymentMethod: {
             type: String,
-            enum: ['cod', 'stripe', 'razorpay'],
+            enum: ['cod', 'online'], //@todo: [0, 1] 0: COD, 1: Online Payment
+            required: true,
         },
         paymentStatus: {
             type: String,
-            enum: ['pending', 'paid', 'failed'],
+            enum: ['pending', 'paid', 'failed', 'refunded'], //@todo: [0, 1, 2, 3]
             default: 'pending',
         },
         orderStatus: {
             type: String,
-            enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'],
+            enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'], //@todo: [0, 1, 2, 3] 0: pending, 1: active, 2: completed, 3: cancelled
             default: 'pending',
         },
         subtotal: {
@@ -90,6 +75,9 @@ const orderSchema = new mongoose.Schema(
         },
         notes: {
             type: String,
+        },
+        cancelAt: {
+            type: Date,
         },
     },
     { timestamps: true }

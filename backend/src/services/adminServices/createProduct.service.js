@@ -3,7 +3,7 @@ import { uploadToCloudinary } from "../../utils/cloudinary.js";
 
 const createProductService = async (productData, files) => {
   try {
-    const { name, price, category, offerPrice, stock } = productData;
+    const { name, price, category, offerPrice, stock, origin } = productData;
 
     if (!name || !price || !category || !files || files.length === 0) {
       return "Thiếu thông tin bắt buộc: name, price, category, image";
@@ -27,6 +27,7 @@ const createProductService = async (productData, files) => {
       category,
       offerPrice,
       stock,
+      origin,
       image: imageUrls,
     });
 

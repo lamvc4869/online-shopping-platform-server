@@ -9,7 +9,7 @@ const getProductByNameService = async (ListProduct, productName) => {
     );
 
     if (result.length === 0) {
-      return `Không tìm thấy sản phẩm ${productName}`;
+      return `Không tìm thấy sản phẩm "${productName}"`;
     }
     return result;
   } catch (error) {

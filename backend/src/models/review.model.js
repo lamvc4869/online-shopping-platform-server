@@ -22,19 +22,17 @@ const reviewSchema = new mongoose.Schema(
             min: 1,
             max: 5,
         },
-        comment: {
-            type: String,
-        },
         images: {
             type: [String],
         },
-        isVerified: {
-            type: Boolean,
-            default: false,
+        comment: {
+            type: String,
         },
     },
     { timestamps: true }
 );
+
+reviewSchema.index({ userId: 1, productId: 1 }, { unique: true });
 
 const Review = mongoose.model("review", reviewSchema);
 

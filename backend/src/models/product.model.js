@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
     {
+        brandId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "brand",
+            required: true,
+        },
         name: {
             type: String,
             required: true,
@@ -43,28 +48,19 @@ const productSchema = new mongoose.Schema(
         origin: {
             type: String,
         },
-        nutritionInfo: {
-            calories: {
-                type: Number,
-            },
-            protein: {
-                type: Number,
-            },
-            carbs: {
-                type: Number,
-            },
-            fat: {
-                type: Number,
-            },
-            fiber: {
-                type: Number,
-            },
-        },
         rating: {
             type: Number,
             default: 0,
         },
         reviewCount: {
+            type: Number,
+            default: 0,
+        },
+        averageRating: {
+            type: Number,
+            default: 0,
+        },
+        sold: {
             type: Number,
             default: 0,
         },

@@ -1,7 +1,7 @@
 import Review from "../../models/review.model.js";
 import Order from "../../models/order.model.js";
 import Product from "../../models/product.model.js";
-import { calculateProductRating } from "../../lib/helpers/ratingCalculator.js"
+import { calculateProductRating } from "../../lib/calcs/ratingCalculator.js"
 
 const createReviewService = async (userId, productId, rating) => {
     const purchasedProduct = await Order.findOne({

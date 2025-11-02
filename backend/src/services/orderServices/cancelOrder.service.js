@@ -1,6 +1,6 @@
 import getOrderByIdService from "./getOrderById.service.js";
-import { increaseProductStock } from "../../lib/helpers/updateStock.js";
-import { decreaseSoldOfProducts } from "../../lib/helpers/updateSold.js";
+import { increaseProductStock } from "../../lib/calcs/updateStock.js";
+import { decreaseSoldOfProducts } from "../../lib/calcs/updateSold.js";
 
 const cancelOrderService = async (userId, orderId) => {
   const order = await getOrderByIdService(userId, orderId);

@@ -1,4 +1,4 @@
-import { calculateItemPrice } from "./priceCalculation.service.js";
+import { calculateItemPrice } from "../calcs/priceCalculation.service.js";
 
 const processCartItems = (cart, products, existingProducts) => {
     for (const product of products) {

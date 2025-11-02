@@ -1,5 +1,5 @@
 import Cart from "../../models/Cart.model.js";
-import { calculateCartTotal } from "../../lib/helpers/priceCalculation.service.js";
+import { calculateCartTotal } from "../../lib/calcs/priceCalculation.service.js";
 import { populateCart } from "../../lib/helpers/cartPopulator.service.js";
 
 const deleteProductFromCartService = async (userId, productId) => {

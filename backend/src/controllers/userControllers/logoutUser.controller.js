@@ -2,24 +2,21 @@ import logoutUserService from "../../services/userServices/logoutUser.service.js
 
 const logoutUserController = async (req, res) => {
   try {
-    const userId = req.user.id;
-    
-    const authHeader = req.headers.authorization;
-    const token = authHeader ? authHeader.substring("Bearer ".length) : null;
-    
-    const result = await logoutUserService(userId, token);
-    if (result === "User không tồn tại") {
-      return res.status(404).json({
-        message: result,
-        success: false,
-      });
-    }
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.headers.authorization?.split(" ")[1];
+    await logoutUserService(accessToken, refreshToken, res);
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    });
     return res.status(200).json({
-      message: result,
+      message: "Logout successfully!",
       success: true,
     });
   } catch (error) {
     return res.status(500).json({
+      message: "Internal server error",
       error: error.message,
     });
   }

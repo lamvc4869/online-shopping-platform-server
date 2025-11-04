@@ -2,15 +2,16 @@ import User from "../../models/user.model.js";
 import bcrypt from "bcrypt";
 import { validateUserDataRegister } from "../../utils/validates.js";
 
-const createUserService = async (userData, res) => {
-  validateUserDataRegister(userData, res);
-  const hashedPassword = await bcrypt.hash(userData?.password, 10);
+const createUserService = async (userData) => {
+  await validateUserDataRegister(userData);
+  const { email, password, role = 0, firstName, lastName } = userData;
+  const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = new User({
-    firstName: userData?.firstName,
-    lastName: userData?.lastName,
-    email: userData?.email,
+    firstName,
+    lastName,
+    email,
     password: hashedPassword,
-    role: userData?.role,
+    role,
   });
   await newUser.save();
   const { password: _pw, walletId: _wl, voucherId: _vc, __v: _v, ...userWithoutPassword } = newUser.toObject();

@@ -1,6 +1,7 @@
 import Product from "../models/product.model.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import { AppError } from "./error.js"
 
 const validateProducts = async (products) => {
   if (!Array.isArray(products) || products.length === 0) {
@@ -46,39 +47,24 @@ const validatePasswordLogin = async (inputPassword, currentPassword) => {
   return await bcrypt.compare(inputPassword, currentPassword);
 };
 
-const validateUserDataRegister = (userData, res) => {
+const validateUserDataRegister = async (userData) => {
   const { email, password, role = 0, firstName, lastName } = userData;
   if (!firstName || !lastName || !email || !password) {
-    return res.status(400).json({
-      message: "Don't leave any information blank",
-      success: false,
-    });
+    throw new AppError("Don't leave any information blank", 400);
   }
   if (role === 1 && userData?.adminKey !== process.env.ADMIN_CREATION_SECRET) {
-    return res.status(403).json({
-      message: "No permission to create admin account",
-      success: false,
-    });
+    throw new AppError("No permission to create admin account", 403);
   }
   if (!validateEmail(email)) {
-    return res.status(400).json({
-      message: "Invalid email",
-      success: false,
-    });
+    throw new AppError("Invalid email", 400);
   }
-  if (isDuplicateEmail(email)) {
-    return res.status(409).json({
-      message: "Email already in use",
-      success: false,
-    });
+  if (await isDuplicateEmail(email)) {
+    throw new AppError("Email already in use", 409);
   }
   if (!validatePasswordRegister(password)) {
-    return res.status(400).json({
-      message: "Password must be at least 8 characters long",
-      success: false,
-    });
-  }
-};
+    throw new AppError("Password must be at least 8 characters long", 400);
+  } 
+};  
 
 export {
   validateProducts,

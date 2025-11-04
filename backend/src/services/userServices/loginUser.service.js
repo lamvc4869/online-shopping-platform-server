@@ -3,27 +3,19 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import Session from "../../models/session.model.js";
 import { validatePasswordLogin } from "../../utils/validates.js";
+import { AppError } from "../../utils/error.js";
 
-const loginUserService = async (payload, res) => {
+const loginUserService = async (payload) => {
   const { email, password } = payload;
   if (!email || !password) {
-    return res.status(400).json({
-      message: "Don't leave any fields blank",
-      success: false,
-    });
+    throw new AppError("Email and password are required!", 400);
   }
   const existingUser = await User.findOne({ email });
   if (!existingUser) {
-    return res.status(404).json({
-      message: "Account does not exist! Please register",
-      success: false,
-    });
+    throw new AppError("Account does not exist! Please register", 404);
   }
   if (!(await validatePasswordLogin(password, existingUser.password))) {
-    return res.status(401).json({
-      message: "Invalid password! Please try again",
-      success: false,
-    });
+    throw new AppError("Invalid password! Please try again", 401);
   }
   const accessToken = jwt.sign(
     {

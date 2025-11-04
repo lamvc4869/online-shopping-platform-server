@@ -1,13 +1,9 @@
-import Cart from "../../models/cart.model.js";
-import { populateCart } from "../../lib/helpers/cartPopulator.service.js";
+import Cart from "../../models/Cart.model.js";
 
 const getCartService = async (userId) => {
-  const cart = await Cart.findOne({ userId, status: 1 });
-  if (!cart) {
-    throw new Error("Active cart not found for the user");
-  }
-  const populatedCart = await populateCart(cart._id);
-  return populatedCart;
+    const cart = await Cart.findOne({ userId, status: 'active' }).populate('products.productId');
+    if (!cart) return "Giỏ hàng không tồn tại";
+    return cart;
 };
 
 export default getCartService;

@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.post("/register", createUserController);
 router.post("/login", loginUserController);
-router.post("/logout", logoutUserController); //@todo: chỉ thêm verifyToken khi có frontend
+router.post("/logout", verifyToken, logoutUserController);
 router.get("/product/search", searchProductByNameController);
 router.get("/products", getAllProductsController);
 router.patch("/user/changePassword", verifyToken, verifyUserOrAdmin, changePasswordController);

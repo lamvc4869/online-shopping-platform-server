@@ -3,26 +3,26 @@ import createOrderService from "../../services/orderServices/createOrder.service
 const createOrderController = async (req, res) => {
   try {
     const userId = req.user.id;
+
     const orderData = req.body;
+
     const result = await createOrderService(userId, orderData);
+
+    if (typeof result === "string") {
+      return res.status(400).json({
+        message: result,
+        success: false,
+      });
+    }
+
     return res.status(201).json({
-      message: "Create order successfully",
+      message: "Tạo đơn hàng thành công",
       success: true,
       order: result,
     });
   } catch (error) {
-    if (
-      error.message === "Cart is empty" ||
-      error.message === "Insufficient stock available" ||
-      error.message === "Shipping address is required"
-    ) {
-      return res.status(400).json({
-        message: error.message,
-        success: false,
-      });
-    }
     return res.status(500).json({
-      message: "Internal server error",
+      message: "Lỗi server",
       error: error.message,
     });
   }

@@ -3,16 +3,14 @@ import { getAllCartsService } from "../../services/cartServices/getAllCarts.serv
 const getAllCartsController = async (req, res) => {
     try {
         const result = await getAllCartsService();
-        
         return res.status(200).json({
             message: 'Get all carts successfully',
             success: true,
-            data: result
+            carts: result
         });
     } catch (error) {
         return res.status(500).json({
-            message: 'Error fetching carts',
-            success: false,
+            message: "Internal server error",
             error: error.message,
         });
     }

@@ -1,8 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import {GENERAL_API, ADMIN_API, CART_API, ORDER_API} from "./src/utils/constants.js";
+import cookieParser from "cookie-parser";
+import { GENERAL_API, ADMIN_API, CART_API, ORDER_API } from "./src/utils/constants.js";
 import { connectDB } from "./src/utils/db.js";
+import { connectRedis } from "./src/utils/redis.js";
 import userRoute from "./src/routes/user.route.js";
 import adminRoute from "./src/routes/admin.route.js";
 import cartRoute from "./src/routes/cart.route.js";
@@ -20,16 +22,16 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(GENERAL_API, userRoute);
 app.use(ADMIN_API, adminRoute);
 app.use(CART_API, cartRoute);
 app.use(ORDER_API, orderRoute);
 
-Promise.all([connectDB(), connectCloudinary()])
+Promise.all([connectDB(), connectCloudinary(), connectRedis()])
   .then(() => {
-    console.log("Connected to database and Cloudinary");
+    console.log("Connected to Cloudinary");
     app.listen(PORT_BE, () => console.log(`Server is running on port ${PORT_BE}`));
   })
   .catch((err) => {

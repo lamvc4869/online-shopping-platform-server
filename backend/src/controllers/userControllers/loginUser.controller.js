@@ -1,10 +1,11 @@
 import loginUserService from "../../services/userServices/loginUser.service.js";
 import ms from "ms";
+import { AppError } from "../../utils/error.js";
 
 const loginUserController = async (req, res) => {
   try {
     const userData = req.body;
-    const result = await loginUserService(userData, res);
+    const result = await loginUserService(userData);
     const { user, accessToken, refreshToken, refreshTokenExpires } = result;
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
@@ -21,6 +22,12 @@ const loginUserController = async (req, res) => {
       refreshTokenExpires: ms(refreshTokenExpires, { long: true }),
     });
   } catch (error) {
+    if (error instanceof AppError) {
+      return res.status(error.statusCode).json({
+        message: error.message,
+        success: false,
+      });
+    }
     return res.status(500).json({
       message: "Internal server error",
       error: error.message,

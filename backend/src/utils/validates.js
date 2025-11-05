@@ -5,7 +5,7 @@ import { AppError } from "./error.js"
 
 const validateProducts = async (products) => {
   if (!Array.isArray(products) || products.length === 0) {
-    throw new Error("Products array is required and cannot be empty");
+    throw new AppError("Products array is required and cannot be empty", 400);
   }
 
   const productIds = products.map((p) => p.productId);
@@ -15,15 +15,18 @@ const validateProducts = async (products) => {
   });
 
   if (existingProducts.length !== productIds.length) {
-    throw new Error("Some products not found or not available");
+    throw new AppError("Some products not found or not available", 404);
   }
 
   for (const product of products) {
+    if (product.quantity < 1) {
+      throw new AppError("Quantity must be at least 1 for all products", 400);
+    }
     const dbProduct = existingProducts.find(
       (p) => p._id.toString() === product.productId
     );
     if (dbProduct.stock < product.quantity) {
-      throw new Error(`Insufficient stock for product: ${dbProduct.name}`);
+      throw new AppError(`Insufficient stock for product: ${dbProduct.name}`, 400);
     }
   }
   return existingProducts;

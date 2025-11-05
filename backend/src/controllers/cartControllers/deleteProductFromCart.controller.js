@@ -1,4 +1,5 @@
 import deleteProductFromCartService from "../../services/cartServices/deleteProductFromCart.service.js";
+import { AppError } from "../../utils/error.js";
 
 const deleteProductFromCartController = async (req, res) => {
   try {
@@ -11,8 +12,8 @@ const deleteProductFromCartController = async (req, res) => {
       cart: result,
     });
   } catch (error) {
-    if (error.message === "Cart not found") {
-        return res.status(404).json({
+    if (error instanceof AppError) {
+        return res.status(error.statusCode).json({
             message: error.message,
             success: false,
         });

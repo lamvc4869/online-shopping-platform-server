@@ -1,17 +1,18 @@
 import getCartService from "../../services/cartServices/getCart.service.js";
+import { AppError } from "../../utils/error.js";
 
 const getCartController = async (req, res) => {
   try {
     const userId = req.user.id;
     const cart = await getCartService(userId);
     return res.status(200).json({
-      message: "Lấy giỏ hàng thành công",
+      message: "Get cart successfully",
       success: true,
       cart: cart,
     });
   } catch (error) {
-    if (error.message === "Active cart not found for the user") {
-      return res.status(404).json({
+    if (error instanceof AppError) {
+      return res.status(error.statusCode).json({
         message: error.message,
         success: false,
       });

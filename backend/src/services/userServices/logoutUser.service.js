@@ -1,21 +1,18 @@
-import User from "../../models/user.model.js";
-import { addToBlacklist } from "../../utils/tokenBlacklist.js";
+import Session from "../../models/session.model.js";
+import { addTokenToBlacklist, isBlacklisted } from "../../utils/tokenBlacklist.js";
+import { AppError } from "../../utils/error.js";
 
-const logoutUserService = async (userId, token) => {
-  try {
-    const existingUser = await User.findById(userId);
-    if (!existingUser) {
-      return "User không tồn tại";
+const logoutUserService = async (accessToken, refreshToken) => {
+    if (!refreshToken) {
+        throw new AppError("Refresh token is required", 400);
     }
-
-    if (token) {
-      addToBlacklist(token);
+    const session = await Session.findOneAndDelete({ refreshToken });
+    if (!session) {
+        throw new AppError("Session not found", 404);
+    }       
+    if (accessToken && !(await isBlacklisted(accessToken))) {
+        await addTokenToBlacklist(accessToken);
     }
-
-    return "Đăng xuất thành công";
-  } catch (error) {
-    return error.message;
-  }
 };
 
 export default logoutUserService;

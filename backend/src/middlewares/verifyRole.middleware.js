@@ -27,12 +27,10 @@ const verifyRole = (allowedRoles) => {
   };
 };
 
-const verifyAdmin = verifyRole(['admin']);
+const verifyAdmin = verifyRole([2]);
 
+const verifyUser = verifyRole([0]);
 
-const verifyUser = verifyRole(['user']);
-
-
-const verifyUserOrAdmin = verifyRole(['user', 'admin']);
+const verifyUserOrAdmin = verifyRole([0, 2]);
 
 export { verifyRole, verifyAdmin, verifyUser, verifyUserOrAdmin };

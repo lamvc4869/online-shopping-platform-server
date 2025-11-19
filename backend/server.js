@@ -16,6 +16,7 @@ const app = express();
 const PORT_BE = process.env.PORT_BE;
 const PORT_FE = process.env.PORT_FE;
 
+// FE port
 const corsOptions = {
   origin: `http://localhost:${PORT_FE}`,
   credentials: true,

@@ -1,7 +1,7 @@
 import Product from "../models/product.model.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
-import { AppError } from "./error.js"
+import { AppError } from "./error.js";
 
 const validateProducts = async (products) => {
   if (!Array.isArray(products) || products.length === 0) {
@@ -26,21 +26,24 @@ const validateProducts = async (products) => {
       (p) => p._id.toString() === product.productId
     );
     if (dbProduct.stock < product.quantity) {
-      throw new AppError(`Insufficient stock for product: ${dbProduct.name}`, 400);
+      throw new AppError(
+        `Insufficient stock for product: ${dbProduct.name}`,
+        400
+      );
     }
   }
   return existingProducts;
 };
 
 const validateEmail = (email) => {
-  const regex = /^[^\s@]{4,}@gmail\.com$/i;
-  return !email || !regex.test(email) ? false : true;
+  if (typeof email !== "string") return false;
+  return /^[^@]+@[^@]+$/.test(email);
 };
 
 const isDuplicateEmail = async (email) => {
   const user = await User.findOne({ email });
   return user ? true : false;
-}
+};
 
 const validatePasswordRegister = (password) => {
   return !password || !password.trim() || password.length < 8 ? false : true;
@@ -51,7 +54,14 @@ const validatePasswordLogin = async (inputPassword, currentPassword) => {
 };
 
 const validateUserDataRegister = async (userData) => {
-  const { email, password, confirmPassword, role = 0, firstName, lastName } = userData;
+  const {
+    email,
+    password,
+    confirmPassword,
+    role = 0,
+    firstName,
+    lastName,
+  } = userData;
   if (!firstName || !lastName || !email || !password || !confirmPassword) {
     throw new AppError("Don't leave any information blank", 400);
   }
@@ -66,11 +76,11 @@ const validateUserDataRegister = async (userData) => {
   }
   if (!validatePasswordRegister(password)) {
     throw new AppError("Password must be at least 8 characters long", 400);
-  } 
+  }
   if (password !== confirmPassword) {
     throw new AppError("Passwords do not match", 400);
   }
-};  
+};
 
 export {
   validateProducts,

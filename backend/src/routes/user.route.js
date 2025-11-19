@@ -12,6 +12,7 @@ import getUserByIdController from "../controllers/sharedControllers/getUserById.
 import getProductByIdController from "../controllers/sharedControllers/getProductById.controller.js";
 import changePasswordController from "../controllers/sharedControllers/changePassword.controller.js";
 import createReviewController from "../controllers/reviewControllers/createReview.controller.js";
+import confirmPasswordUserController from "../controllers/userControllers/confirmPasswordUser.controller.js";
 
 const router = express.Router();
 
@@ -22,6 +23,7 @@ router.get("/product/search", searchProductByNameController);
 router.get("/products", getAllProductsController);
 router.patch("/user/changePassword", verifyToken, verifyUserOrAdmin, changePasswordController);
 
+router.post("/user/:userId/confirmPassword", confirmPasswordUserController);
 router.post("/product/:productId/review", verifyToken, createReviewController);
 router.patch("/user/:userId", verifyToken, verifyUserOrAdmin, upload.single("avatar"), updateUserController);
 router.get("/user/:userId", verifyToken, getUserByIdController);

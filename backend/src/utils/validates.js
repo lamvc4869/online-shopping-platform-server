@@ -51,8 +51,8 @@ const validatePasswordLogin = async (inputPassword, currentPassword) => {
 };
 
 const validateUserDataRegister = async (userData) => {
-  const { email, password, role = 0, firstName, lastName } = userData;
-  if (!firstName || !lastName || !email || !password) {
+  const { email, password, confirmPassword, role = 0, firstName, lastName } = userData;
+  if (!firstName || !lastName || !email || !password || !confirmPassword) {
     throw new AppError("Don't leave any information blank", 400);
   }
   if (role === 1 && userData?.adminKey !== process.env.ADMIN_CREATION_SECRET) {
@@ -67,6 +67,9 @@ const validateUserDataRegister = async (userData) => {
   if (!validatePasswordRegister(password)) {
     throw new AppError("Password must be at least 8 characters long", 400);
   } 
+  if (password !== confirmPassword) {
+    throw new AppError("Passwords do not match", 400);
+  }
 };  
 
 export {

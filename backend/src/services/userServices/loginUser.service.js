@@ -35,9 +35,10 @@ const loginUserService = async (payload) => {
     refreshToken,
     expiresAt: new Date(Date.now() + refreshTokenExpires),
   });
-  const { password: _pw, ...userWithoutPassword } = existingUser.toObject();
+  const { password: _pw, confirmPassword: _cpw, ...userWithoutPassword } = existingUser.toObject();
   return {
     user: userWithoutPassword,
+    role: existingUser.role === 2 ? "admin" : (existingUser.role === 1 ? "shop" : "user"),
     accessToken,
     refreshToken,
     refreshTokenExpires,

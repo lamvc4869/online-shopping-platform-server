@@ -6,7 +6,7 @@ import {
   validateProductNameUnique,
 } from "../../utils/validates.js";
 
-const createProductService = async (productData, files) => {
+const createProductService = async (productData, files, adminId) => {
   const {
     name,
     price,
@@ -32,6 +32,7 @@ const createProductService = async (productData, files) => {
   );
 
   const newProduct = new Product({
+    createdBy: adminId,
     brandId,
     name: name.trim(),
     price: Number(price),
@@ -50,6 +51,7 @@ const createProductService = async (productData, files) => {
   await newProduct.save();
 
   await newProduct.populate("brandId", "brandName brandAdress");
+  await newProduct.populate("createdBy", "firstName lastName email");
 
   return newProduct;
 };

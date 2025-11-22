@@ -5,8 +5,9 @@ const createProductController = async (req, res) => {
   try {
     const productData = req.body;
     const files = req.files;
+    const adminId = req.user.id;
 
-    const product = await createProductService(productData, files);
+    const product = await createProductService(productData, files, adminId);
 
     return res.status(201).json({
       message: "Tạo sản phẩm thành công",

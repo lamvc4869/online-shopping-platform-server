@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
     {
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "user",
+            required: true,
+        },
         brandId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "brand",

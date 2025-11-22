@@ -13,6 +13,9 @@ import updateProductController from "../controllers/adminControllers/updateProdu
 import getProductByIdController from "../controllers/sharedControllers/getProductById.controller.js";
 import getAllOrdersController from "../controllers/adminControllers/getAllOrders.controller.js";
 import updateOrderStatusController from "../controllers/adminControllers/updateOrderStatus.controller.js";
+import createBrandController from "../controllers/adminControllers/createBrand.controller.js";
+import getAllBrandsController from "../controllers/adminControllers/getAllBrands.controller.js";
+import getBrandByIdController from "../controllers/adminControllers/getBrandById.controller.js";
 
 const router = express.Router();
 
@@ -24,6 +27,10 @@ router.get("/stats", getUserStatsController);
 router.get("/orders", getAllOrdersController);
 router.delete("/user/:userId", deleteUserController);
 router.patch("/order/:orderId/status", updateOrderStatusController);
+
+router.post("/brand", createBrandController);
+router.get("/brands", getAllBrandsController);
+router.get("/brand/:brandId", getBrandByIdController);
 
 router.get('/products', getAllProductsController);
 router.post("/product", upload.array("image", 4), createProductController);

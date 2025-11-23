@@ -1,41 +1,59 @@
 import Product from "../../models/product.model.js";
 import { uploadToCloudinary } from "../../utils/cloudinary.js";
+import {
+  validateProductData,
+  validateBrandExists,
+  validateProductNameUnique,
+} from "../../utils/validates.js";
 
-const createProductService = async (productData, files) => {
-  try {
-    const { name, price, category, offerPrice, stock, origin } = productData;
+const createProductService = async (productData, files, adminId) => {
+  const {
+    name,
+    price,
+    category,
+    brandId,
+    offerPrice,
+    stock,
+    origin,
+    description,
+    subCategory,
+    unit,
+    bestseller,
+  } = productData;
 
-    if (!name || !price || !category || !files || files.length === 0) {
-      return "Thiếu thông tin bắt buộc: name, price, category, image";
-    }
+  await validateProductData(productData, files);
 
-    const existingProduct = await Product.findOne({ name });
-    if (existingProduct) return "Sản phẩm với tên này đã tồn tại";
+  await validateBrandExists(brandId);
 
-    if (price <= 0) return "Giá sản phẩm phải lớn hơn 0";
-    if (offerPrice && offerPrice >= price)
-      return "Giá khuyến mãi phải nhỏ hơn giá gốc";
-    if (stock && stock < 0) return "Số lượng tồn kho không thể âm";
+  await validateProductNameUnique(name);
 
-    const imageUrls = await Promise.all(
-      files.map((file) => uploadToCloudinary(file.path))
-    );
+  const imageUrls = await Promise.all(
+    files.map((file) => uploadToCloudinary(file.path))
+  );
 
-    const newProduct = new Product({
-      name,
-      price,
-      category,
-      offerPrice,
-      stock,
-      origin,
-      image: imageUrls,
-    });
+  const newProduct = new Product({
+    createdBy: adminId,
+    brandId,
+    name: name.trim(),
+    price: Number(price),
+    category,
+    image: imageUrls,
+    // Optional fields - only include if provided
+    ...(description && { description }),
+    ...(offerPrice && { offerPrice: Number(offerPrice) }),
+    ...(subCategory && { subCategory }),
+    ...(unit && { unit }),
+    ...(origin && { origin }),
+    ...(stock !== undefined && stock !== null && { stock: Number(stock) }),
+    ...(bestseller !== undefined && { bestseller: Boolean(bestseller) }),
+  });
 
-    await newProduct.save();
-    return newProduct;
-  } catch (error) {
-    return error.message;
-  }
+  await newProduct.save();
+
+  await newProduct.populate("brandId", "brandName brandAdress");
+  await newProduct.populate("createdBy", "firstName lastName email");
+
+  return newProduct;
 };
 
 export default createProductService;

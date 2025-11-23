@@ -1,18 +1,16 @@
-import createProductService from "../../services/adminServices/createProduct.service.js";
+import createBrandService from "../../services/adminServices/createBrand.service.js";
 import { AppError } from "../../utils/error.js";
 
-const createProductController = async (req, res) => {
+const createBrandController = async (req, res) => {
   try {
-    const productData = req.body;
-    const files = req.files;
-    const adminId = req.user.id;
+    const brandData = req.body;
 
-    const product = await createProductService(productData, files, adminId);
+    const brand = await createBrandService(brandData);
 
     return res.status(201).json({
-      message: "Tạo sản phẩm thành công",
+      message: "Tạo thương hiệu thành công",
       success: true,
-      data: product,
+      data: brand,
     });
   } catch (error) {
     if (error instanceof AppError) {
@@ -29,4 +27,5 @@ const createProductController = async (req, res) => {
   }
 };
 
-export default createProductController;
+export default createBrandController;
+

@@ -4,6 +4,7 @@ import crypto from "crypto";
 import Session from "../../models/session.model.js";
 import { validatePasswordLogin } from "../../utils/validates.js";
 import { AppError } from "../../utils/error.js";
+import { createCartService } from "../cartServices/createCart.service.js";
 
 const loginUserService = async (payload) => {
   const { email, password } = payload;
@@ -17,6 +18,11 @@ const loginUserService = async (payload) => {
   if (!(await validatePasswordLogin(password, existingUser.password))) {
     throw new AppError("Invalid password! Please try again", 401);
   }
+  if (existingUser.loginCount === 0) {
+    await createCartService(existingUser._id);
+  }
+  existingUser.loginCount += 1;
+  await existingUser.save();
   const accessToken = jwt.sign(
     {
       id: existingUser._id,

@@ -48,6 +48,10 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String,
     },
+    loginCount: {
+      type: Number,
+      default: 0,
+    }
   },
   { timestamps: true }
 );

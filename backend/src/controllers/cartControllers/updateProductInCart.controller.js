@@ -5,8 +5,8 @@ const updateProductInCartController = async (req, res) => {
   try {
     const userId = req.user.id;
     const { productId } = req.params;
-    const { quantity } = req.body;
-    const result = await updateProductInCartService(userId, productId, quantity);
+    const payload = req.body;
+    const result = await updateProductInCartService(userId, productId, payload);
     return res.status(200).json({
       message: "Updated product quantity in cart successfully",
       success: true,

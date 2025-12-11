@@ -7,14 +7,16 @@ import addProductToCartController from "../controllers/cartControllers/addProduc
 import deleteProductFromCartController from "../controllers/cartControllers/deleteProductFromCart.controller.js";
 import getCartController from "../controllers/cartControllers/getCart.controller.js";
 import updateProductInCartController from "../controllers/cartControllers/updateProductInCart.controller.js";
+import updateAllproductsInCartController from "../controllers/cartControllers/updateAllProductsInCart.controller.js";
 
 const router = express.Router();
 
 router.get("/myCart", verifyToken, getCartController);
 router.get("/", verifyToken, verifyUserOrAdmin, getAllCartsController);
 router.post("/", verifyToken, verifyUserOrAdmin, createCartController);
-router.post("/items", verifyToken, verifyUserOrAdmin, addProductToCartController);
-router.delete("/:productId", verifyToken, verifyUserOrAdmin, deleteProductFromCartController);
-router.patch("/:productId", verifyToken, verifyUserOrAdmin, updateProductInCartController);
+router.post("/products", verifyToken, verifyUserOrAdmin, addProductToCartController);
+router.delete("/products/:productId", verifyToken, verifyUserOrAdmin, deleteProductFromCartController);
+router.patch("/products/:productId", verifyToken, verifyUserOrAdmin, updateProductInCartController);
+router.patch("/products", verifyToken, verifyUserOrAdmin, updateAllproductsInCartController);
 
 export default router;

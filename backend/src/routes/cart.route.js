@@ -8,6 +8,8 @@ import deleteProductFromCartController from "../controllers/cartControllers/dele
 import getCartController from "../controllers/cartControllers/getCart.controller.js";
 import updateProductInCartController from "../controllers/cartControllers/updateProductInCart.controller.js";
 import updateAllproductsInCartController from "../controllers/cartControllers/updateAllProductsInCart.controller.js";
+import removeSelectedProductsController from "../controllers/cartControllers/removeSelectedProducts.controller.js";
+import removeUnavailableProductsController from "../controllers/cartControllers/removeUnavailableProducts.controller.js";
 
 const router = express.Router();
 
@@ -15,6 +17,8 @@ router.get("/myCart", verifyToken, getCartController);
 router.get("/", verifyToken, verifyUserOrAdmin, getAllCartsController);
 router.post("/", verifyToken, verifyUserOrAdmin, createCartController);
 router.post("/products", verifyToken, verifyUserOrAdmin, addProductToCartController);
+router.delete("/products/selected", verifyToken, verifyUserOrAdmin, removeSelectedProductsController);
+router.delete("/products/unavailable", verifyToken, verifyUserOrAdmin, removeUnavailableProductsController);
 router.delete("/products/:productId", verifyToken, verifyUserOrAdmin, deleteProductFromCartController);
 router.patch("/products/:productId", verifyToken, verifyUserOrAdmin, updateProductInCartController);
 router.patch("/products", verifyToken, verifyUserOrAdmin, updateAllproductsInCartController);

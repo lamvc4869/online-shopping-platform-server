@@ -8,10 +8,10 @@ import { validateProductExistingInCart } from "../../lib/validates/validateCart.
 const addProductToCartService = async (userId, products) => {
   const existingProducts = await validateProducts(products);
   const cart = await findOrCreateCart(userId);
+  for(const product of products) {
+      await validateProductExistingInCart(cart, product);
+  }
   processCartItems(cart, products, existingProducts);
-  products.forEach(async (product) => {
-    await validateProductExistingInCart(cart, product);
-  });
   cart.totalAmount = calculateCartTotal(cart.products);
   await cart.save();
   const populatedCart = await populateCart(cart._id);

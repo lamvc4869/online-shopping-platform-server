@@ -10,11 +10,13 @@ const processCartItems = (cart, products, existingProducts) => {
 
         if (existingItemIndex > -1) {
             cart.products[existingItemIndex].quantity += product.quantity;
+            cart.products[existingItemIndex].selected = product.selected;
         } else {
             cart.products.push({
                 productId: product.productId,
                 quantity: product.quantity,
-                price: calculateItemPrice(dbProduct)
+                price: calculateItemPrice(dbProduct),
+                selected: product.selected,
             });
         }
     }

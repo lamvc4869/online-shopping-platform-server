@@ -12,7 +12,6 @@ import getUserByIdController from "../controllers/sharedControllers/getUserById.
 import getProductByIdController from "../controllers/sharedControllers/getProductById.controller.js";
 import changePasswordController from "../controllers/sharedControllers/changePassword.controller.js";
 import createReviewController from "../controllers/reviewControllers/createReview.controller.js";
-import getProductsController from "../controllers/sharedControllers/getProducts.controller.js";
 
 const router = express.Router();
 
@@ -20,7 +19,7 @@ router.post("/register", createUserController);
 router.post("/login", loginUserController);
 router.post("/logout", logoutUserController); //@todo: chỉ thêm verifyToken khi có frontend
 router.get("/product/search", searchProductByNameController);
-router.get("/products", getProductsController);
+router.get("/products", getAllProductsController);
 router.patch("/user/changePassword", verifyToken, verifyUserOrAdmin, changePasswordController);
 
 router.post("/product/:productId/review", verifyToken, createReviewController);

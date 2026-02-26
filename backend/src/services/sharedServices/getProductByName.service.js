@@ -5,11 +5,11 @@ const getProductByNameService = async (ListProduct, productName) => {
     const keyWord = productName.toLowerCase();
 
     const result = ListProduct.filter((product) =>
-      product.name.toLowerCase().includes(keyWord)
+      product.name.toLowerCase().includes(keyWord),
     );
 
     if (result.length === 0) {
-      return `Không tìm thấy sản phẩm "${productName}"`;
+      return `No products found matching "${productName}"`;
     }
     return result;
   } catch (error) {

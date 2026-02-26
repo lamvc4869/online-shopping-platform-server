@@ -5,7 +5,7 @@ const deleteProductController = async (req, res) => {
     const { productId } = req.params;
     const result = await deleteProductService(productId);
 
-    if (result === "Sản phẩm không tồn tại") {
+    if (result === "Product not found") {
       return res.status(404).json({
         message: result,
         success: false,
@@ -18,7 +18,7 @@ const deleteProductController = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       error: error.message,
     });
   }

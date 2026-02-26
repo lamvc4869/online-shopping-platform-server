@@ -5,13 +5,13 @@ const getAllUsersController = async (req, res) => {
     const result = await getAllUsersService();
 
     return res.status(200).json({
-      message: "Lấy danh sách user thành công",
+      message: "Users fetched successfully",
       success: true,
       data: result,
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       success: false,
       error: error.message,
     });

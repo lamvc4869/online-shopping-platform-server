@@ -10,7 +10,7 @@ const createProductController = async (req, res) => {
     const product = await createProductService(productData, files, adminId);
 
     return res.status(201).json({
-      message: "Tạo sản phẩm thành công",
+      message: "Product created successfully",
       success: true,
       data: product,
     });
@@ -22,7 +22,7 @@ const createProductController = async (req, res) => {
       });
     }
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       success: false,
       error: error.message,
     });

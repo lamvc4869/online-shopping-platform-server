@@ -6,18 +6,17 @@ const cancelOrderService = async (userId, orderId) => {
   const order = await getOrderByIdService(userId, orderId);
 
   if (order.orderStatus === "cancelled") {
-    throw new Error("Đơn hàng đã được hủy trước đó");
+    throw new Error("This order has already been cancelled");
   }
 
   if (order.orderStatus !== "pending") {
-    throw new Error("Đơn hàng chỉ có thể hủy khi ở trạng thái đang chờ xử lý");
+    throw new Error("Orders can only be cancelled while in pending status");
   }
 
   order.orderStatus = "cancelled";
   if (order.paymentStatus === "paid") {
     order.paymentStatus = "refunded";
-  }
-  else if (order.paymentStatus === "pending") {
+  } else if (order.paymentStatus === "pending") {
     order.paymentStatus = "failed";
   }
 
@@ -27,7 +26,7 @@ const cancelOrderService = async (userId, orderId) => {
 
   await decreaseSoldOfProducts(order.products);
 
-  return "Đơn hàng đã được hủy thành công";
+  return "Order cancelled successfully";
 };
 
 export default cancelOrderService;

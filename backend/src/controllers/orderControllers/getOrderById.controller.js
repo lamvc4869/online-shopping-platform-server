@@ -8,19 +8,19 @@ const getOrderByIdController = async (req, res) => {
 
     if (!order) {
       return res.status(404).json({
-        message: "Đơn hàng không tồn tại",
+        message: "Order not found",
         success: false,
       });
     }
 
     return res.status(200).json({
-      message: "Lấy đơn hàng thành công",
+      message: "Order retrieved successfully",
       success: true,
       order: order,
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       error: error.message,
     });
   }

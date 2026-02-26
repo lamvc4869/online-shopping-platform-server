@@ -6,7 +6,7 @@ const getAllBrandsController = async (req, res) => {
     const brands = await getAllBrandsService();
 
     return res.status(200).json({
-      message: "Lấy danh sách thương hiệu thành công",
+      message: "Brands fetched successfully",
       success: true,
       data: brands,
     });
@@ -18,7 +18,7 @@ const getAllBrandsController = async (req, res) => {
       });
     }
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       success: false,
       error: error.message,
     });
@@ -26,4 +26,3 @@ const getAllBrandsController = async (req, res) => {
 };
 
 export default getAllBrandsController;
-

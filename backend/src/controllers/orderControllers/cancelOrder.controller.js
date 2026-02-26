@@ -13,8 +13,8 @@ const cancelOrderController = async (req, res) => {
     });
   } catch (error) {
     if (
-      error.message === "Đơn hàng đã được hủy trước đó" ||
-      error.message === "Đơn hàng chỉ có thể hủy khi ở trạng thái đang chờ xử lý"
+      error.message === "This order has already been cancelled" ||
+      error.message === "Orders can only be cancelled while in pending status"
     ) {
       return res.status(400).json({
         message: error.message,
@@ -23,7 +23,7 @@ const cancelOrderController = async (req, res) => {
     }
 
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       error: error.message,
       success: false,
     });

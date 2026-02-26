@@ -11,7 +11,7 @@ const deleteUserController = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       success: false,
       error: error.message,
     });

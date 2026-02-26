@@ -3,11 +3,10 @@ import Product from "../../models/product.model.js";
 const deleteProductService = async (productId) => {
   try {
     const product = await Product.findById(productId);
-    if (!product) return "Sản phẩm không tồn tại";
+    if (!product) return "Product not found";
 
     await Product.findByIdAndDelete(productId);
-    return "Xóa sản phẩm thành công";
-    
+    return "Product deleted successfully";
   } catch (error) {
     return error.message;
   }

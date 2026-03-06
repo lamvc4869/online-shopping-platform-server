@@ -8,7 +8,7 @@ const createBrandController = async (req, res) => {
     const brand = await createBrandService(brandData);
 
     return res.status(201).json({
-      message: "Tạo thương hiệu thành công",
+      message: "Brand created successfully",
       success: true,
       data: brand,
     });
@@ -20,7 +20,7 @@ const createBrandController = async (req, res) => {
       });
     }
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       success: false,
       error: error.message,
     });
@@ -28,4 +28,3 @@ const createBrandController = async (req, res) => {
 };
 
 export default createBrandController;
-

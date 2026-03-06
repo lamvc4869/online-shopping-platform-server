@@ -9,7 +9,7 @@ const getMyProductsController = async (req, res) => {
     const products = await getProductsByAdminService(adminId);
 
     return res.status(200).json({
-      message: `Lấy danh sách sản phẩm của ${adminEmail} thành công`,
+      message: `Products for ${adminEmail} fetched successfully`,
       success: true,
       count: products.length,
       data: products,
@@ -22,7 +22,7 @@ const getMyProductsController = async (req, res) => {
       });
     }
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       success: false,
       error: error.message,
     });
@@ -30,4 +30,3 @@ const getMyProductsController = async (req, res) => {
 };
 
 export default getMyProductsController;
-

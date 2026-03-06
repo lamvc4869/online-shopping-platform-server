@@ -12,14 +12,13 @@ const getAllOrdersController = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: "Lấy danh sách đơn hàng thành công",
+      message: "Orders fetched successfully",
       success: true,
       orders: orders,
     });
-
   } catch (error) {
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       error: error.message,
     });
   }

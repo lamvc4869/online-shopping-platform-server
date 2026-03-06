@@ -3,20 +3,20 @@ import User from "../../models/user.model.js";
 const deleteUserService = async (userId) => {
   try {
     if (!userId) {
-      return "ID user không được để trống";
+      return "User ID is required";
     }
 
     const user = await User.findById(userId);
     if (!user) {
-      return "User không tồn tại";
+      return "User not found";
     }
 
-    if (user.role === 'admin') {
-      return "Không thể xóa tài khoản admin";
+    if (user.role === "admin") {
+      return "Admin accounts cannot be deleted";
     }
 
     await User.findByIdAndDelete(userId);
-    return "Xóa user thành công";
+    return "User deleted successfully";
   } catch (error) {
     return error.message;
   }

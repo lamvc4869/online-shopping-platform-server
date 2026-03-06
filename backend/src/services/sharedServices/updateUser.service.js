@@ -4,13 +4,20 @@ import { uploadToCloudinary } from "../../utils/cloudinary.js";
 
 const updateUserService = async (userId, updateData, updateFile) => {
   try {
-    if (!userId) return "ID user không được để trống";
-    if (!updateData && !updateFile) return "Không có dữ liệu để cập nhật";
+    if (!userId) return "User ID is required";
+    if (!updateData && !updateFile) return "No data provided to update";
 
     const user = await User.findById(userId);
-    if (!user) return "User không tồn tại";
+    if (!user) return "User not found";
 
-    const allowedFields = ["firstName", "lastName", "email", "password", "role", "age", "address",
+    const allowedFields = [
+      "firstName",
+      "lastName",
+      "email",
+      "password",
+      "role",
+      "age",
+      "address",
       "phoneNumber",
     ];
 
@@ -24,7 +31,8 @@ const updateUserService = async (userId, updateData, updateFile) => {
               email: value,
               _id: { $ne: userId },
             });
-            if (existingEmail) return "Email đã được sử dụng bởi user khác";
+            if (existingEmail)
+              return "Email is already in use by another account";
             user[key] = value;
           } else {
             user[key] = value;

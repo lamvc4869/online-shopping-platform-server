@@ -8,7 +8,7 @@ const updateUserController = async (req, res) => {
 
     if (updateData?.role && !["user", "admin"].includes(updateData.role)) {
       return res.status(400).json({
-        message: "Role không hợp lệ",
+        message: "Invalid role",
         success: false,
       });
     }
@@ -23,13 +23,13 @@ const updateUserController = async (req, res) => {
     }
 
     return res.status(200).json({
-      message: "Cập nhật user thành công",
+      message: "User updated successfully",
       success: true,
       data: result,
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       success: false,
       error: error.message,
     });

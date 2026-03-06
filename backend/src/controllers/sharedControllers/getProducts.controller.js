@@ -7,7 +7,7 @@ const getProductsController = async (req, res) => {
     const limit = parseInt(req.query.limit);
     const result = await getProductsService(page, limit);
     return res.status(200).json({
-      message: "Lấy danh sách sản phẩm thành công",
+      message: "Products fetched successfully",
       success: true,
       ...result,
     });
@@ -19,7 +19,7 @@ const getProductsController = async (req, res) => {
       });
     }
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       success: false,
     });
   }

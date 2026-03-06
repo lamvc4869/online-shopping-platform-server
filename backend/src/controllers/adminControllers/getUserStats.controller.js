@@ -5,13 +5,13 @@ const getUserStatsController = async (req, res) => {
     const result = await getUserStatsService();
 
     return res.status(200).json({
-      message: "Lấy thống kê user thành công",
+      message: "User stats fetched successfully",
       success: true,
       data: result,
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       success: false,
       error: error.message,
     });

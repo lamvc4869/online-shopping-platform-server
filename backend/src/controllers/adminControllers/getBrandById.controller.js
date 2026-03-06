@@ -8,7 +8,7 @@ const getBrandByIdController = async (req, res) => {
     const brand = await getBrandByIdService(brandId);
 
     return res.status(200).json({
-      message: "Lấy thông tin thương hiệu thành công",
+      message: "Brand details fetched successfully",
       success: true,
       data: brand,
     });
@@ -20,7 +20,7 @@ const getBrandByIdController = async (req, res) => {
       });
     }
     return res.status(500).json({
-      message: "Lỗi server",
+      message: "Internal server error",
       success: false,
       error: error.message,
     });
@@ -28,4 +28,3 @@ const getBrandByIdController = async (req, res) => {
 };
 
 export default getBrandByIdController;
-

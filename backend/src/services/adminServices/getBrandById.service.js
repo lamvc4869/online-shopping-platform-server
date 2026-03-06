@@ -9,11 +9,10 @@ const getBrandByIdService = async (brandId) => {
   const brand = await Brand.findById(brandId);
 
   if (!brand) {
-    throw new AppError("Brand không tồn tại", 404);
+    throw new AppError("Brand not found", 404);
   }
 
   return brand;
 };
 
 export default getBrandByIdService;
-
